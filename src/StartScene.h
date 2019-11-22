@@ -5,6 +5,11 @@
 #include "Scene.h"
 #include "Label.h"
 #include "ship.h"
+#include "MoveState.h" 
+#include "Planet.h"
+#include "Mine.h"
+#include "SoundManager.h"
+#include "CollisionManager.h"
 
 class StartScene : public Scene
 {
@@ -24,8 +29,14 @@ private:
 	Label* m_pInstructionsLabel;*/
 
 	Ship* m_pShip;
-
+	MoveState m_moveState;
 	glm::vec2 m_mousePosition;
+ 
+	//planet 
+	Planet* m_pPlanet;
+
+	//mine stuff
+	Mine* m_pMine;
 
 	// ImGui utility functions
 	void m_ImGuiKeyMap();
@@ -36,6 +47,18 @@ private:
 	bool m_exitApp = false;
 	bool m_displayAbout = false;
 	bool m_displayUI = true;
+
+	// Physics Variables
+	float m_gravity = 9.8f;
+	int m_PPM = 10; // pixels per meter
+	glm::vec2 m_position = glm::vec2(0.0f, 0.0f);
+	glm::vec2 m_velocity = glm::vec2(0.0f, 0.0f);
+	glm::vec2 m_acceleration = glm::vec2(0.0f, 0.0f);
+
+	glm::vec2 m_speed = glm::vec2(0.0f, 0.0f);
+
+	// Physics functions
+	void m_move();
 };
 
 #endif /* defined (__START_SCENE__) */

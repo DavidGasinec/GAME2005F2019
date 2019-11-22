@@ -26,11 +26,11 @@ bool CollisionManager::squaredRadiusCheck(GameObject * object1, GameObject * obj
 
 			switch (object2->getType()) {
 			case PLANET:
-				//std::cout << "Collision with Island!" << std::endl;
+				std::cout << "Collision with planet!" << std::endl;
 				TheSoundManager::Instance()->playSound("yay", 0);
 				break;
 			case MINE:
-				//std::cout << "Collision with Cloud!" << std::endl;
+				std::cout << "Collision with mine" << std::endl;
 				TheSoundManager::Instance()->playSound("thunder", 0);
 				break;
 			default:
@@ -42,7 +42,8 @@ bool CollisionManager::squaredRadiusCheck(GameObject * object1, GameObject * obj
 		}
 		return false;
 	}
-
+	else
+		object2->setIsColliding(false);
 	
 }
 
@@ -96,6 +97,21 @@ bool CollisionManager::lineRectCheck(glm::vec2 line1Start, glm::vec2 line1End, g
 		return true;
 	}
 
+	return false;
+}
+
+bool CollisionManager::AABBCheck(GameObject* object1, GameObject* object2)
+{
+	if (object1->getPosition().x < object2->getPosition().x + object2->getWidth() &&
+		object1->getPosition().x + object1->getWidth() > object2->getPosition().x &&
+		object1->getPosition().y < object2->getPosition().y + object2->getHeight() &&
+		object1->getHeight() + object1->getPosition().y > object2->getPosition().y) 
+	{
+		std::cout << "collision!" << std::endl;
+		TheSoundManager::Instance()->playSound("yay", 0);
+		return true;
+	}
+	else
 	return false;
 }
 
